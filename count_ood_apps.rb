@@ -11,11 +11,15 @@ def username
   Etc.getlogin
 end
 
+def version
+  File.read('/opt/ood/VERSION').chomp
+end
+
 def run
   no_sys, all_sys_apps = sys_apps
   no_usr, _all_usr_apps = usr_apps
 
-  puts "The user #{username} has access to:"
+  puts "The user #{username} has access to these Open OnDemand #{version} apps:"
   puts "  #{no_sys} system installed applications."
   puts "  #{no_usr} shared applications."
   puts ''

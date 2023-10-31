@@ -2,6 +2,7 @@
 
 SYS_DIR='/var/www/ood/apps/sys'
 USR_DIR='/var/www/ood/apps/usr'
+VERSION=$(cat /opt/ood/VERSION)
 
 SYS_DIRS=$(ls $SYS_DIR)
 USR_DIRS=$(ls $USR_DIR)
@@ -25,7 +26,7 @@ for dir in $USR_DIRS; do
   fi
 done
 
-echo "The user $(whoami) has access to:"
+echo "The user $(whoami) has access to these Open OnDemand $VERSION apps:"
 echo "  ${#VALID_SYS_DIRS[@]} system installed applications."
 echo "  ${#VALID_USR_DIRS[@]} shared applications."
 echo ''
