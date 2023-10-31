@@ -37,7 +37,7 @@ your current user has access to.
 
 ```
 [ood-reporting-utils(main)]  ./count_ood_apps.sh
-The user johrstrom has access to:
+The user johrstrom has access to these Open OnDemand 3.0.3 apps:
   27 system installed applications.
   10 shared applications.
 
@@ -50,7 +50,7 @@ activejobs
 And the ruby variant:
 ```
 [ood-reporting-utils(main)]  ./count_ood_apps.rb 
-The user johrstrom has access to:
+The user johrstrom has access to these Open OnDemand 3.0.3 apps:
   27 system installed applications.
   10 shared applications.
 
