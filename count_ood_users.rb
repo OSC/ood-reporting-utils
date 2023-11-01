@@ -19,7 +19,7 @@ def load_etc_release
 end
 
 def log_dir
-  if ENV['ID_LIKE'].to_s == 'fedora'
+  if ENV['ID_LIKE'].to_s =~ /.*fedora.*/
     if ENV['VERSION_ID'].to_s < '8.0'
       '/var/log/httpd24'
     else
@@ -31,7 +31,7 @@ def log_dir
 end
 
 def etc_dir
-  if ENV['ID_LIKE'].to_s == 'fedora'
+  if ENV['ID_LIKE'].to_s =~ /.*fedora.*/
     if ENV['VERSION_ID'].to_s < '8.0'
       '/opt/rh/httpd24/root/etc/httpd'
     else

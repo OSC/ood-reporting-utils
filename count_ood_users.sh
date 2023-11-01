@@ -2,7 +2,7 @@
 
 source /etc/os-release
 
-if [[ "$ID_LIKE" == "fedora" ]]; then
+if [[ "$ID_LIKE" =~ "fedora" ]]; then
   if [[ "$VERSION_ID" < "8.0" ]]; then
     HTTPD_DIR="/var/log/httpd24"
     ETC_DIR="/opt/rh/httpd24/root/etc/httpd"
