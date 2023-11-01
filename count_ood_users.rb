@@ -30,17 +30,37 @@ def log_dir
   end
 end
 
+def etc_dir
+  if ENV['ID_LIKE'].to_s == 'fedora'
+    if ENV['VERSION_ID'].to_s < '8.0'
+      '/opt/rh/httpd24/root/etc/httpd'
+    else
+      '/etc/httpd'
+    end
+  else
+    '/etc/apache2'
+  end
+end
+
 def all_logs
   Dir.glob("#{log_dir}/*_access*.log*").reject do |logfile|
     File.basename(logfile).to_s.start_with?('localhost')
   end
 end
 
+def user_index
+  @user_index ||= begin
+    log_format = `grep -rh LogFormat #{etc_dir} 2>/dev/null | grep combined | grep -v combinedio | head -n 1`.to_s
+    log_format.split(' ').each_with_index.map do |token, index|
+      token.to_s == '%u' ? index-1 : nil
+    end.compact.first
+  end
+end
 
 def oldest_log_date
   all_logs.reduce(DateTime.now) do |oldest, log|
     basename = File.basename(log)
-    date = basename[/.*.log-(\d+)./, 1] # -- 20231011
+    date = basename[/.*.log-(\d+).*$/, 1] # -- 20231011
     next(oldest) if date.nil?
 
     logdate = DateTime.strptime(date, '%Y%m%d')
@@ -57,7 +77,7 @@ end
 # ip                servername  -  user      ?
 def parse_line(line)
   tokens = line.split(' ')
-  username = tokens[3]
+  username = tokens[user_index]
   @known_users[username] = 'found' if real_user?(username)
 end
 
